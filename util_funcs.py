@@ -1,5 +1,31 @@
 # encode: utf-8
 
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import numpy as np
+
+from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import PolynomialFeatures, StandardScaler
+from sklearn.svm import SVC, SVR, LinearSVR, NuSVR
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import *
+from sklearn.ensemble import *
+from sklearn.neural_network import MLPRegressor
+from sklearn.tree import *
+from sklearn.neighbors import KNeighborsRegressor
+from sklearn.kernel_ridge import KernelRidge
+
+import pickle
+
+import tensorflow as tf
+import tensorflow.keras as keras
+from keras.wrappers.scikit_learn import KerasRegressor
+
+import itertools
+from datetime import datetime
+import os
+
 def test_model_F(train_X, train_y, test_X, test_y, model, params=[{}], sep='',
                  show_params=True, returnErrors=False, printErrors=True, saveModel=False):
     if returnErrors:
@@ -15,7 +41,7 @@ def test_model_F(train_X, train_y, test_X, test_y, model, params=[{}], sep='',
         if returnErrors:
             res.append(mean_absolute_error(test_model.predict(test_X).astype(int), test_y))
         if saveModel:
-            save_to_file(test_model, filename)
+            save_to_file(test_model)
             
     if returnErrors:
         return res
@@ -43,7 +69,7 @@ def get_name_for_model():
     return filename
 
 def save_to_file(model):
-    filename = get_name_for_model
+    filename = get_name_for_model()
     with open(filename, 'wb') as f:
         pickle.dump(model, f)
     print("Модель сохранена в " + filename)

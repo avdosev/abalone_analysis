@@ -1,3 +1,5 @@
+# encode: utf-8
+
 from prepare import *
 from util_funcs import *
 
