@@ -1,3 +1,5 @@
+# encode: utf-8
+
 def test_model_F(train_X, train_y, test_X, test_y, model, params=[{}], sep='',
                  show_params=True, returnErrors=False, printErrors=True, saveModel=False):
     if returnErrors:
@@ -6,9 +8,9 @@ def test_model_F(train_X, train_y, test_X, test_y, model, params=[{}], sep='',
         test_model = model(**param)
         test_model.fit(train_X, train_y)
         if params != [{}] and show_params:
-            print("Параметры:", param)
+            print("РџР°СЂР°РјРµС‚СЂС‹:", param)
         if printErrors:
-            print("Оценка:", mean_absolute_error(test_model.predict(test_X).astype(int), test_y))
+            print("РћС†РµРЅРєР°:", mean_absolute_error(test_model.predict(test_X).astype(int), test_y))
             print(end=sep)
         if returnErrors:
             res.append(mean_absolute_error(test_model.predict(test_X).astype(int), test_y))
@@ -22,9 +24,9 @@ def calc_errors(predicted_y, real_y):
     y_diff = list(map(lambda x,y:x-y, predicted_y ,real_y))
     me = sum(y_diff)/len(y_diff)
     mae = mean_absolute_error(predicted_y, real_y)
-    print(f"Средняя ошибка: {me}")
-    print(f"Средняя абсолютная ошибка: {mae}")
-    print("Распределение ошибок:")
+    print(f"РЎСЂРµРґРЅСЏСЏ РѕС€РёР±РєР°: {me}")
+    print(f"РЎСЂРµРґРЅСЏСЏ Р°Р±СЃРѕР»СЋС‚РЅР°СЏ РѕС€РёР±РєР°: {mae}")
+    print("Р Р°СЃРїСЂРµРґРµР»РµРЅРёРµ РѕС€РёР±РѕРє:")
     fig = plt.figure()
     plt.hist(y_diff, bins=max(y_diff)-min(y_diff)+1)
     plt.show()
@@ -44,13 +46,13 @@ def save_to_file(model):
     filename = get_name_for_model
     with open(filename, 'wb') as f:
         pickle.dump(model, f)
-    print("Модель сохранена в " + filename)
+    print("РњРѕРґРµР»СЊ СЃРѕС…СЂР°РЅРµРЅР° РІ " + filename)
     
 def save_keras_model_to_file(model):
     name = get_name_for_model()
     os.mkdir(name)
     model.save(name)
-    print("Модель сохранена в " + name)
+    print("РњРѕРґРµР»СЊ СЃРѕС…СЂР°РЅРµРЅР° РІ " + name)
 
 def load_from_file(filename):
     with open(filename, 'rb') as f:

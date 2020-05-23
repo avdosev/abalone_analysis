@@ -29,7 +29,7 @@ import os
 
 splitted_data, poly_splitted_data, norm_splitted_data = adv_split_data(get_prepared_data())
 
-# один из вариантов моделей
+# РѕРґРёРЅ РёР· РІР°СЂРёР°РЅС‚РѕРІ РјРѕРґРµР»РµР№
 # model = keras.models.Sequential([
 #     keras.layers.InputLayer(X_train.shape[1]),
 #     keras.layers.BatchNormalization(),
@@ -66,7 +66,7 @@ model.fit(X_train, y_train, batch_size=70, epochs=40, callbacks=[
     keras.callbacks.EarlyStopping(monitor="loss", min_delta=0, patience=5, verbose=0, mode="min"),
 ])
 
-print("Оценка:", mean_absolute_error(model.predict(X_test).astype(int), y_test))
+print("РћС†РµРЅРєР°:", mean_absolute_error(model.predict(X_test).astype(int), y_test))
 
 save_keras_model_to_file(model)
 
@@ -104,6 +104,5 @@ for i in range(50):
     model.fit(X_train, y_train, batch_size=100, epochs=300, callbacks=[
         keras.callbacks.EarlyStopping(monitor="loss", min_delta=0, patience=5, verbose=0, mode="min"),
     ])
-    calc_errors(list(map(lambda x:x[0], model.predict(X_test).astype(int))), y_test)
+    print(mean_absolute_error(list(map(lambda x:x[0], model.predict(X_test).astype(int))), y_test))
     save_keras_model_to_file(model)
-
