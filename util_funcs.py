@@ -18,10 +18,6 @@ from sklearn.kernel_ridge import KernelRidge
 
 import pickle
 
-import tensorflow as tf
-import tensorflow.keras as keras
-from keras.wrappers.scikit_learn import KerasRegressor
-
 import itertools
 from datetime import datetime
 import os
@@ -65,7 +61,7 @@ def int_mse(y_true, y_pred):
 
 def get_name_for_model():
     cur_time = datetime.now().isoformat().replace(":","_").replace(".","_")
-    filename = './test_models/'+'model_'+cur_time
+    filename = './test_models/'+'model_'+cur_time+'.hdf5'
     return filename
 
 def save_to_file(model):
@@ -76,7 +72,8 @@ def save_to_file(model):
     
 def save_keras_model_to_file(model):
     name = get_name_for_model()
-    os.mkdir(name)
+    if not os.path.exists(os.path.dirname(name)):
+        os.makedirs(os.path.dirname(name))
     model.save(name)
     print("Модель сохранена в " + name)
 
@@ -91,4 +88,4 @@ def showG(x_data, model):
     data_predicted['rings'] = Y_predicted.astype(int)
     sns.set()
     sns.pairplot(data_predicted, height = 6)
-    plt.show();
+    plt.show()
