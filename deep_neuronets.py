@@ -3,14 +3,8 @@
 from prepare import *
 from util_funcs import *
 
-from sklearn.metrics import *
-from sklearn.tree import *
-
 import tensorflow as tf
 import tensorflow.keras as keras
-
-from datetime import datetime
-import os
 
 splitted_data, poly_splitted_data, norm_splitted_data = adv_split_data(get_prepared_data())
 X_train, y_train, X_test, y_test = poly_splitted_data
@@ -28,32 +22,34 @@ X_train, y_train, X_test, y_test = poly_splitted_data
 #     keras.layers.Dense(1)
 # ])
 
-model = keras.models.Sequential([
-    keras.layers.InputLayer(X_train.shape[1]),
-    keras.layers.BatchNormalization(),
-    keras.layers.Dense(90, activation='relu'),
-    keras.layers.Dropout(0.2),
-    keras.layers.BatchNormalization(),
-    keras.layers.Dense(45, activation='relu'),
-    keras.layers.Dropout(0.2),
-    keras.layers.BatchNormalization(),
-    keras.layers.Dense(10, activation='relu'),
-    keras.layers.BatchNormalization(),
-    keras.layers.Dense(40, activation='sigmoid'),
-    keras.layers.Dense(1)
-])
+for i in range(50):
+    model = keras.models.Sequential([
+        keras.layers.InputLayer(X_train.shape[1]),
+        keras.layers.BatchNormalization(),
+        keras.layers.Dense(90, activation='relu'),
+        keras.layers.Dropout(0.2),
+        keras.layers.BatchNormalization(),
+        keras.layers.Dense(45, activation='relu'),
+        keras.layers.Dropout(0.2),
+        keras.layers.BatchNormalization(),
+        keras.layers.Dense(10, activation='relu'),
+        keras.layers.BatchNormalization(),
+        keras.layers.Dense(40, activation='sigmoid'),
+        keras.layers.Dense(1)
+    ])
 
-model.compile(optimizer='adam',
-                        loss='mean_absolute_error',
-                        metrics=['mae'])
+    model.compile(optimizer='adam',
+                            loss='mean_absolute_error',
+                            metrics=['mae'])
 
-model.fit(X_train, y_train, batch_size=70, epochs=40, callbacks=[
-    keras.callbacks.EarlyStopping(monitor="loss", min_delta=0, patience=5, verbose=0, mode="min"),
-])
+    model.fit(X_train, y_train, batch_size=70, epochs=40, callbacks=[
+        keras.callbacks.EarlyStopping(monitor="loss", min_delta=0, patience=5, verbose=0, mode="min"),
+    ])
 
-print("Оценка:", mean_absolute_error(model.predict(X_test).astype(int), y_test))
+    print("Оценка:", mean_absolute_error(model.predict(X_test).astype(int), y_test))
+    save_keras_model_to_file(model)
 
-save_keras_model_to_file(model)
+print("\n\n\nПереход на другую архитектуру\n\n\n\n\n")
 
 def get_model(input_shape):
     def model_layer(X):

@@ -1,21 +1,8 @@
 # encode: utf-8
 
 import pandas as pd
-import numpy as np
-
 from sklearn.preprocessing import PolynomialFeatures, StandardScaler
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import *
-from sklearn.ensemble import *
-from sklearn.neural_network import MLPRegressor
-from sklearn.tree import *
-
-import pickle
-
-
-import itertools
-from datetime import datetime
-import os
 
 def get_prepared_data():
     data_path = './data/abalone.csv'

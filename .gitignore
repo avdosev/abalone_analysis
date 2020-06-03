@@ -1,4 +1,8 @@
-test_models/
+simple_ensembles/
+simple_models/
+neuro_ensembles/
+keras_models/
+
 logs/
 
 # Byte-compiled / optimized / DLL files
