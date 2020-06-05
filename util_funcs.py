@@ -28,7 +28,7 @@ def test_model_F(train_X, train_y, test_X, test_y, model, params=[{}], sep='',
         if params != [{}] and show_params:
             print("Параметры:", param)
         if print_errors:
-            print("Оценка:", mean_absolute_error(test_model.predict(test_X).astype(int), test_y))
+            print("Оценка (MAE):", mean_absolute_error(test_model.predict(test_X).astype(int), test_y))
             print(end=sep)
         if check_time:
             print(f"Время: {time_end-time_start}")
