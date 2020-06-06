@@ -60,7 +60,7 @@ def int_mse(y_true, y_pred):
 
 def get_name_for_model(folder = './test_models/'):
     if not os.path.isdir(folder):
-        os.mkdir(folder)
+        os.makedirs(folder)
     cur_time = datetime.now().isoformat().replace(":","_").replace(".","_")
     filename = folder+'model_'+cur_time
     return filename
